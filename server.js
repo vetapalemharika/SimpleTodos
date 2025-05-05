@@ -1,20 +1,23 @@
 const express = require('express');
-const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const connectDB = require('./config/db');
 
+// Load environment variables
+dotenv.config();
 
-// Set Mongoose strictQuery to false to avoid the deprecation warning
-mongoose.set('strictQuery', false);
-
-// Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/crediKhaata')
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.log('Error connecting to MongoDB:', err));
+// Connect to the database
+connectDB();
 
 const app = express();
-app.use(cors());
+
+// Middleware to parse JSON
 app.use(express.json());
 
-// Your API routes here...
+// Mount your routes
+app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api',       require('./routes/customerRoutes'));
+app.use('/api',       require('./routes/loanRoutes'));
+app.use('/api',       require('./routes/repaymentRoutes'));
 
 // Start the server
 const PORT = process.env.PORT || 5000;
