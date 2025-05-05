@@ -1,4 +1,5 @@
-const Loan = require('../models/loan');
+
+    const Loan = require('../models/loan');
 const Repayment = require('../models/Repayment');
 const moment = require('moment');
 
